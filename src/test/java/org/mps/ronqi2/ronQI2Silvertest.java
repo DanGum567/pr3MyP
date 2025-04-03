@@ -112,6 +112,8 @@ public class ronQI2Silvertest {
         //Arrange
         RonQI2Silver ronQI2Silver = new RonQI2Silver();
         DispositivoSilver dispMock = mock(DispositivoSilver.class);
+        when(dispMock.configurarSensorPresion()).thenReturn(true);
+        when(dispMock.conectarSensorPresion()).thenReturn(true);
         when(dispMock.configurarSensorSonido()).thenReturn(true);
         ronQI2Silver.anyadirDispositivo(dispMock);
         //Act
