@@ -5,6 +5,13 @@ package org.mps.ronqi2;
  * 
 */
 
+import org.junit.jupiter.api.Test;
+import org.mps.dispositivo.Dispositivo;
+import org.mps.dispositivo.DispositivoSilver;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
+
 public class ronQI2Silvertest {
 
     
@@ -19,6 +26,36 @@ public class ronQI2Silvertest {
      * Un inicializar debe configurar ambos sensores, comprueba que cuando se inicializa de forma correcta (el conectar es true), 
      * se llama una sola vez al configurar de cada sensor.
      */
+    //Comprobamos que cuando se inicializa llama solo una vez a configuracion presion
+    @Test
+    public void inicilizar_llamarSoloUnaVezConfiguracionPresion(){
+        //Arrange
+        RonQI2Silver ronQI2Silver = new RonQI2Silver();
+        DispositivoSilver dispMock = mock(DispositivoSilver.class);
+        when(dispMock.configurarSensorPresion()).thenReturn(true);
+        ronQI2Silver.anyadirDispositivo(dispMock);
+        //Act
+        ronQI2Silver.inicializar();
+        //Assert
+        verify(ronQI2Silver.disp, times(1)).conectarSensorPresion();
+    }
+
+    @Test
+    public void inicilizar_llamarSoloUnaVezConfiguracionSonido(){
+        //Arrange
+        RonQI2Silver ronQI2Silver = new RonQI2Silver();
+        DispositivoSilver dispMock = mock(DispositivoSilver.class);
+        when(dispMock.configurarSensorSonido()).thenReturn(true);
+        ronQI2Silver.anyadirDispositivo(dispMock);
+        //Act
+        ronQI2Silver.inicializar();
+        //Assert
+        verify(ronQI2Silver.disp, times(1)).conectarSensorSonido();
+    }
+    
+    //Comprobamos que cuando se inicializa llama solo una vez a configuracion sonido
+
+
 
     /*
      * Un reconectar, comprueba si el dispositivo desconectado, en ese caso, conecta ambos y devuelve true si ambos han sido conectados. 
