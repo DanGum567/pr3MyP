@@ -1,5 +1,9 @@
 package org.mps.ronqi2;
-
+/*
+ * No son todos los casos que tenemos que probar.
+ * Hay mas
+ * 
+*/
 
 public class ronQI2Silvertest {
 
