@@ -5,12 +5,17 @@ package org.mps.ronqi2;
  * 
 */
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mps.dispositivo.Dispositivo;
 import org.mps.dispositivo.DispositivoSilver;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ronQI2Silvertest {
 
@@ -27,6 +32,68 @@ public class ronQI2Silvertest {
      * se llama una sola vez al configurar de cada sensor.
      */
     //Comprobamos que cuando se inicializa llama solo una vez a configuracion presion
+
+    RonQI2Silver rqi;
+    DispositivoSilver dispMock;
+
+    @BeforeEach
+    public void setUp(){
+        rqi  = new RonQI2Silver();
+        dispMock = mock(DispositivoSilver.class);
+    }
+    @Test
+    public void inicializar_SeConectanYSeConfiguranSensores_DevuelveVerdadero(){
+        //Arrange
+        when(dispMock.conectarSensorPresion()).thenReturn(true);
+        when(dispMock.conectarSensorSonido()).thenReturn(true);
+        when(dispMock.configurarSensorPresion()).thenReturn(true);
+        when(dispMock.configurarSensorSonido()).thenReturn(true);  
+        rqi.anyadirDispositivo(dispMock);      
+        //Act
+        boolean result = rqi.inicializar();
+        //Assert
+        assertTrue(result);
+    }
+    @Test
+    public void inicializar_NoSeConectaSonido_DevuelveFalso(){
+        //Arrange
+        when(dispMock.conectarSensorPresion()).thenReturn(true);
+        when(dispMock.conectarSensorSonido()).thenReturn(true);
+        //when(dispMock.configurarSensorPresion()).thenReturn(true);
+        rqi.anyadirDispositivo(dispMock);      
+        //Act
+        boolean result = rqi.inicializar();
+        //Assert
+        assertFalse(result);
+    }
+    @Test
+    public void inicializar_NoSeConfiguraSonido_DevuelveFalso(){
+        //Arrange
+        when(dispMock.conectarSensorPresion()).thenReturn(true);
+        when(dispMock.conectarSensorSonido()).thenReturn(true);
+        when(dispMock.conectarSensorSonido()).thenReturn(true);
+        //when(dispMock.configurarSensorPresion()).thenReturn(true);
+        rqi.anyadirDispositivo(dispMock);      
+        //Act
+        boolean result = rqi.inicializar();
+        //Assert
+        assertFalse(result);
+    }
+    @Test
+    public void inicializar_NoSeConectaPresion_DevuelveFalso(){
+        //Arrange
+        when(dispMock.conectarSensorPresion()).thenReturn(true);
+        when(dispMock.conectarSensorSonido()).thenReturn(true);
+        when(dispMock.conectarSensorSonido()).thenReturn(true);
+        //when(dispMock.configurarSensorPresion()).thenReturn(true);
+        rqi.anyadirDispositivo(dispMock);      
+        //Act
+        boolean result = rqi.inicializar();
+        //Assert
+        assertFalse(result);
+    }
+
+
     @Test
     public void inicilizar_llamarSoloUnaVezConfiguracionPresion(){
         //Arrange
