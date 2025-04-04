@@ -41,7 +41,7 @@ public class RonQI2Silver extends RonQI2{
     */
     @Override
     public boolean evaluarApneaSuenyo() {
-        boolean resultado;
+        //boolean resultado;
         Double avgP = lecturasP.stream()
                 .mapToDouble(d -> d)
                 .average()
@@ -50,14 +50,21 @@ public class RonQI2Silver extends RonQI2{
                 .mapToDouble(d -> d)
                 .average()
                 .orElse(0.0);
-        
+       /*
+        if-else es INCORRECTO dado que el método debe devolver verdadero cuando el promedio de 
+        ambos sensores supera los límites correspondientes.
+
+        Si no los supera devuelve falso.
+       
         if (avgP>=thresholdP && avgS > thresholdS){
-            resultado = false;
+        
+            resultado = true;
         }   
         else{
             resultado = true;
         }
-        return resultado;
+        */
+        return avgP>=thresholdP && avgS > thresholdS;
     }
 
    
