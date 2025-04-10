@@ -10,6 +10,7 @@ public class RonQI2Silver extends RonQI2{
     private List<Float> lecturasS;
     private float thresholdP;
     private float thresholdS;
+
     public RonQI2Silver() {
         lecturasP = new ArrayList<Float>();
         lecturasS = new ArrayList<Float>();
@@ -27,7 +28,8 @@ public class RonQI2Silver extends RonQI2{
         if(lecturasP.size()>numLecturas){
             lecturasP.remove(0); 
         }
-        lecturasS.add(disp.leerSensorPresion());
+        // Corrección #1: se lee la presión cuando debería leerse el sonido
+        lecturasS.add(disp.leerSensorSonido()); 
         if(lecturasS.size()>numLecturas){
             lecturasS.remove(0); 
         }
@@ -36,8 +38,8 @@ public class RonQI2Silver extends RonQI2{
     /* 
      * Evalua la apnea del sueno. 
      * - Devuelve true si el promedio de las lecturas de presion y sonido es mayor a los limites 
-     *      establecidos
-     * - False en otro caso
+     *   establecidos.
+     * - False en otro caso.
     */
     @Override
     public boolean evaluarApneaSuenyo() {
@@ -51,6 +53,7 @@ public class RonQI2Silver extends RonQI2{
                 .average()
                 .orElse(0.0);
        /*
+        Corrección #2:
         if-else es INCORRECTO dado que el método debe devolver verdadero cuando el promedio de 
         ambos sensores supera los límites correspondientes.
 
@@ -58,7 +61,7 @@ public class RonQI2Silver extends RonQI2{
        
         if (avgP>=thresholdP && avgS > thresholdS){
         
-            resultado = true;
+            resultado = false;
         }   
         else{
             resultado = true;

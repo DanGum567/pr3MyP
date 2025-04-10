@@ -16,7 +16,7 @@ public abstract class RonQI2 {
                 result = disp.configurarSensorSonido() && confPresion;
             }
         }
-        return result;   
+        return result;  
     }
 
     /* 
